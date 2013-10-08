@@ -119,11 +119,13 @@ public class Cabine extends Constantes {
 		Etage etagecourant = immeuble.etage(immeuble.cabine.etage.numero());
 		switch(status){
 		case '^' : 
-			if ( immeuble.etageLePlusHaut() != etagecourant && encore(status) ) break;
+			if ( immeuble.etageLePlusHaut() != etagecourant && encore()) break;
+			if (continuer(immeuble)) break;
 			status = 'v';
 			break;
 		case 'v' :
-			if ( immeuble.etageLePlusBas() != etagecourant && encore(status) ) break;
+			if ( immeuble.etageLePlusBas() != etagecourant && encore()) break;
+			if (continuer(immeuble)) break;
 			status = '^';
 			break;
 		default:
@@ -132,10 +134,37 @@ public class Cabine extends Constantes {
 		assert status=='^' || status=='v' || status=='-' ;
 	}
 
-	
-	private boolean encore(char status) {
+
+	private boolean continuer(Immeuble imm) {
+		// TODO Auto-generated method stub
+		int i = this.etage.numero() -1;
+		int y = 1;
+
+		while (true) {
+			if (i+y != 6) {
+				if (imm.etage(i+y).doitStopper() && this.status == '^') {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			if (i-y != -1) {
+				if (imm.etage(i-y).doitStopper() && this.status == 'v') {
+					return true;
+				} else {
+					return false;
+				}
+			}
+
+			y++;
+
+		}
+	}
+
+	private boolean encore() {
 		int i = this.tableauPassager.length -1;
-		
+
 		while ( i >= 0)
 		{
 			Passager p = tableauPassager[i];
