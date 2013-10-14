@@ -48,10 +48,21 @@ public class Echeancier extends Constantes {
 		System.out.println("");
 	}
 
-	public boolean retarderFermeture(long tempspourentrerousortirdelacabine){
-		return true;
-		//return false;
-
+	public boolean retarderFermeture(long temps){
+		if (temps == 0)
+			return true;
+		
+		int i = 0;
+		while ( i < listeEvenements.size()){
+			Evenement fpc = listeEvenements.get(i);
+			
+			if( fpc instanceof EvenementFermeturePorteCabine){
+				listeEvenements.remove(i);
+				this.ajouter(new EvenementFermeturePorteCabine(fpc.date));
+				return true;
+			}
+		}
+		return false;
 	}
 
 

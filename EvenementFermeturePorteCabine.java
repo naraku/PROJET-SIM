@@ -1,7 +1,7 @@
 public class EvenementFermeturePorteCabine extends Evenement {
     
     public EvenementFermeturePorteCabine(long l) {
-	super(l);
+    	super(l + tempsPourOuvrirOuFermerLesPortes);
     }
     
     public void afficheDetails(Immeuble immeuble) {
