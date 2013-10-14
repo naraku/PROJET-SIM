@@ -16,31 +16,25 @@ public class EvenementArriveePassagerPalier extends Evenement {
 		Cabine cabine = immeuble.cabine;
 		assert etageDeDepart != null;
 		Passager p = new Passager (this.date, etageDeDepart, immeuble);		
-		assert etageDeDepart == p.etageDepart();	
+		assert etageDeDepart == p.etageDepart();
 
-		if (cabine.etage.numero() == etageDeDepart.numero() && cabine.porteOuverte()) {
-			
-			/*******************************/
-			boolean rentre = false;
-			
-			boolean modeParfait = immeuble.isModeParfait();
-			if (modeParfait)
+
+		if ( cabine.etage.numero() == etageDeDepart.numero() && cabine.porteOuverte() ) {
+			if ( p.prioPassager() == cabine.status() || !immeuble.isModeParfait() )
 			{
-				 if ( p.prioPassager() == cabine.status() )
-				 {
-					 rentre = cabine.ajouterPassager(p, modeParfait);
-				 }
+				long temps = 0;
+				cabine.ajouterPassager(p);
+				temps += Constantes.tempsPourEntrerOuSortirDeLaCabine;
+
+				if ( temps != 0 )
+				{
+					echeancier.retarderFermeture(temps);
+					date += etageDeDepart.arriveeSuivant ();
+					echeancier.ajouter(this);
+					return;
+				}
 			}
-			else
-			{
-				rentre = cabine.ajouterPassager(p, modeParfait);
-			}
-		
-			if ( rentre ) echeancier.retarderFermeture(tempsPourEntrerOuSortirDeLaCabine);
-			
-		
-			/*******************************/
-			
+
 		} else {
 			if( cabine.status() == '-' ) {
 				if (cabine.etage.numero() > etageDeDepart.numero()) {
@@ -50,9 +44,9 @@ public class EvenementArriveePassagerPalier extends Evenement {
 					aProgrammerPlusTard ();
 				}
 			}
-			
+
 		}
-		
+
 		etageDeDepart.ajouter(p);
 		date += etageDeDepart.arriveeSuivant ();
 		echeancier.ajouter(this);

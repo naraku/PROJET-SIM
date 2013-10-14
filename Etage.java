@@ -87,19 +87,20 @@ public class Etage {
 		return false;
 	}
 
-	public int EntreePassager(){
-		int temps = 0;
+	public long EntreePassager(){
+		long temps = 0;
 		Cabine cabine = immeuble.cabine;
 		char prio = immeuble.cabine.status();
 		int i = listePassagersEtage.size() - 1;
 		
 		boolean isParfait = immeuble.isModeParfait();
 		boolean rentre = true;
+		
 		while( rentre && i >= 0 ){
 			Passager p = listePassagersEtage.get(i);
-			if ( !isParfait || p.prioPassager() == cabine.status() )
+			if ( p.prioPassager() == cabine.status() || !isParfait )
 			{
-				rentre = cabine.ajouterPassager(p, isParfait);
+				rentre = cabine.ajouterPassager(p);
 				temps += Constantes.tempsPourEntrerOuSortirDeLaCabine;
 				listePassagersEtage.remove(i);
 			}

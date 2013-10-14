@@ -30,10 +30,9 @@ public class Cabine extends Constantes {
 		System.out.println(status);
 	}
 
-	public boolean ajouterPassager (Passager passager, boolean isModeParfait) {
+	public boolean ajouterPassager (Passager passager) {
 		assert passager != null;
 		assert ! transporte(passager);
-		assert ( isModeParfait ? passager.prioPassager() == this.status() : true);
 		int i = tableauPassager.length - 1;
 		while ( i >= 0 ) {
 			if (tableauPassager[i] == null) {
@@ -141,24 +140,15 @@ public class Cabine extends Constantes {
 		int y = 1;
 
 		while (true) {
-			if (i+y != 6) {
-				if (imm.etage(i+y).doitStopper() && this.status == '^') {
-					return true;
-				} else {
-					return false;
-				}
-			}
-
-			if (i-y != -1) {
-				if (imm.etage(i-y).doitStopper() && this.status == 'v') {
-					return true;
-				} else {
-					return false;
-				}
-			}
-
+			if (i+y != imm.etageLePlusHaut().numero() )
+				if (imm.etage(i+y).doitStopper() && this.status == '^') return true;
+				else return false;
+			
+			if (i-y != imm.etageLePlusHaut().numero() )
+				if (imm.etage(i-y).doitStopper() && this.status == 'v') return true;
+				else return false;
+			
 			y++;
-
 		}
 	}
 
