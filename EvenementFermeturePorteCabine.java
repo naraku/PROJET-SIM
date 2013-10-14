@@ -15,8 +15,6 @@ public class EvenementFermeturePorteCabine extends Evenement {
     	
     	cabine.porteOuverte = false;   	
     	
-    	this.date += tempsPourBougerLaCabineDUnEtage;
-    	
     	//REDONDANT AVEC EVENEMENT PASSAGER PALIER
     	if (cabine.status() == 'v')
 		{
