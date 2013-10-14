@@ -45,7 +45,7 @@ public class EvenementArriveePassagerPalier extends Evenement {
 			if( cabine.status() == '-' ) {
 				if (cabine.etage.numero() > etageDeDepart.numero()) {
 					cabine.set_status('v');
-					echeancier.ajouter(new EvenementPassageCabinePalier (this.date + tempsPourBougerLaCabineDUnEtage, immeuble.etageInferieur(cabine.etage)));
+					echeancier.ajouter(new EvenementPassageCabinePalier (this.date, immeuble.etageInferieur(cabine.etage)));
 				} else {
 					aProgrammerPlusTard ();
 				}

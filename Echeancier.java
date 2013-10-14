@@ -49,18 +49,20 @@ public class Echeancier extends Constantes {
 	}
 
 	public boolean retarderFermeture(long temps){
-		if (temps == 0)
-			return true;
+	
 		
 		int i = 0;
-		while ( i < listeEvenements.size()){
+		while ( i < listeEvenements.size() ){
 			Evenement fpc = listeEvenements.get(i);
 			
 			if( fpc instanceof EvenementFermeturePorteCabine){
+				
+				this.ajouter( new EvenementFermeturePorteCabine(fpc.date + temps) );
+				
 				listeEvenements.remove(i);
-				this.ajouter(new EvenementFermeturePorteCabine(fpc.date));
 				return true;
 			}
+			i++;
 		}
 		return false;
 	}

@@ -3,7 +3,7 @@ public class EvenementPassageCabinePalier extends Evenement {
     private Etage etage;
 	
     public EvenementPassageCabinePalier(long l, Etage e) {
-	super(l);
+	super(l + tempsPourBougerLaCabineDUnEtage);
 	etage = e;
     }
     
